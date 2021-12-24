@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="addressViewModel"
+      type="com.lifepharmacy.application.ui.address.AddressViewModel" />
+
+    <variable
+      name="viewModel"
+      type="com.lifepharmacy.application.ui.cart.viewmodel.CartViewModel" />
+
+    <variable
+      name="isOrderPlaced"
+      type="Boolean" />
+
+    <variable
+      name="isLoggedIn"
+      type="androidx.databinding.ObservableField&lt;Boolean&gt;" />
+
+    <variable
+      name="click"
+      type="com.lifepharmacy.application.ui.cart.fragmets.ClickPaymentFragment" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/backGroundColor">
+
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/nestedScrollView"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginHorizontal="@dimen/dimen_8dp"
+      android:fillViewport="true"
+      app:layout_constraintBottom_toTopOf="@+id/cardView2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toll_bar">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_item_count"
+          style="@style/text_14_1d1d_open_regular"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp_10"
+          android:text="@{viewModel.appManager.offersManagers.cartQtyCountMut.toString() + ` items`}"
+          android:visibility="gone"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/textView24"
+          style="@style/text_14_a8a8_open_regular"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen_8dp"
+          android:text="@string/in_your_cart"
+          android:visibility="gone"
+          app:layout_constraintStart_toEndOf="@+id/tv_item_count"
+          app:layout_constraintTop_toTopOf="@+id/tv_item_count"
+          tools:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/textView25"
+          style="@style/text_12_7070_regular"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen_16dp"
+          android:text="@string/total"
+          android:textAllCaps="true"
+          android:visibility="gone"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/tv_item_count" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/textView26"
+          style="@style/text_16_accent_dark_bold"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen_4dp"
+          android:textAllCaps="true"
+          android:visibility="gone"
+          app:layout_constraintEnd_toEndOf="@+id/textView25"
+          app:layout_constraintTop_toBottomOf="@+id/textView25"
+          tools:text="AED 200"
+          tools:visibility="gone" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <include
+            android:id="@+id/ly_address"
+            layout="@layout/item_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{isLoggedIn &amp;&amp; addressViewModel.isThereAnyAddress ?View.VISIBLE:View.GONE}"
+            tools:visibility="gone" />
+
+          <include
+            android:id="@+id/ly_delivery_options"
+            layout="@layout/layout_delivery_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="visible" />
+
+          <include
+            android:id="@+id/ll_return_policy"
+            layout="@layout/layout_return_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="visible" />
+
+          <include
+            android:id="@+id/ly_payment_methods"
+            layout="@layout/layout_payment_methods_flat_design"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="visible" />
+
+          <include
+            android:id="@+id/ly_order_summary"
+            layout="@layout/layout_payment_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="visible" />
+
+        </LinearLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/cardView2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:cardMaxElevation="@dimen/dimen_8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/btn_confirm"
+          style="@style/blueBotton"
+          setAlpha="@{viewModel.isThereCart &amp;&amp; viewModel.appManager.storageManagers.config.oRDERINGENABLED ? true : false}"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/button_height"
+          android:layout_marginHorizontal="@dimen/dimen_16dp"
+          android:layout_marginVertical="@dimen/dimen_8dp"
+          android:onClick="@{()->click.onClickProceed()}"
+          android:text="@string/review_order"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <include
+      android:id="@+id/toll_bar"
+      layout="@layout/layout_top_back"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+      android:id="@+id/ll_order_placed"
+      layout="@layout/layout_order_place_greating"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:visibility="@{isOrderPlaced?View.VISIBLE : View.GONE}"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/nestedScrollView"
+      app:layout_constraintVertical_bias="0.19"
+      tools:visibility="gone" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
